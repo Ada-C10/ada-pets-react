@@ -17,5 +17,4 @@ describe('petcard', () => {
 
     expect(wrapper).toMatchSnapshot();
   });
-
 });

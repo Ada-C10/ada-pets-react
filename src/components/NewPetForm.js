@@ -48,6 +48,7 @@ class NewPetForm extends Component {
   }
 
   render() {
+    console.log('rendering new pet form');
     return (
       <form onSubmit={this.onSubmit} name="new-pet-form" id="new-pet-form" className="new-pet-form">
         <div>

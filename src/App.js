@@ -89,14 +89,37 @@ class App extends Component {
   }
 
   addPet = (newPet) => {
-    newPet.id = this.state.masterList.reduce((max = 0, currentPet) => max ? Math.max(max, currentPet.id): currentPet.id) + 1
-    newPet.images = [newPet.image];
-    const petList = [...this.state.masterList, newPet];
+    const apiPayload = {
+      ...newPet,
+      img: newPet.image,
+      breed: newPet.species,
+      owner: '',
+    };
+    axios.post(URL, apiPayload)
+      .then( (response) => {
+        const myNewPet = response.data;
+        newPet.images = [newPet.image];
+        newPet.id = myNewPet.id
 
-    this.setState({
-      petList: petList,
-      masterList: petList,
-    });
+        const {petList, masterList} = this.state;
+
+        masterList.push(newPet);
+
+        if (petList !== masterList)
+          petList.push(newPet);
+
+        this.setState({
+          petList,
+          masterList,
+          errorMessage: 'Pet Added',
+        });
+
+      })
+      .catch( (error) => {
+        this.setState({
+          errorMessage: `Failure ${error.message}`,
+        })
+      });
   }
 
   removePet = (petId) => {
@@ -114,7 +137,7 @@ class App extends Component {
     this.setState({
       petList: pets,
       masterList: pets,
-    })
+    });
   }
 
   render() {
