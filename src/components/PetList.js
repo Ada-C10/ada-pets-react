@@ -1,5 +1,6 @@
 import React from 'react';
 import PetCard from './PetCard';
+import NewPetForm from './NewPetForm';
 import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,7 +23,7 @@ class PetList extends React.Component {
     axios.get(GET_ALL_PETS_URL)
     .then((response) => {
       this.setState({
-        pets: [response.data[0]],
+        pets: response.data,
       });
     })
     .catch((error) => {
@@ -30,6 +31,26 @@ class PetList extends React.Component {
         error: error.message
       });
     });
+  }
+
+  addPet = (petData) => {
+    console.log("Trying to add pet in the PetList component");
+    console.log(petData, "petData");
+    axios.post('https://petdibs.herokuapp.com/pets', petData)
+      .then((response) => {
+        // What should we do when we know the post request worked?
+        console.log('we definitely have a new pet!', petData);
+
+        const updatedPetList = [ ...this.state.pets, petData]
+
+        this.setState({
+          pets: updatedPetList,
+        })
+      })
+      .catch((error) => {
+        // What should we do when we know the post request failed?
+      });
+
   }
 
   render() {
@@ -48,7 +69,16 @@ class PetList extends React.Component {
 
     return (
       <div>
-        {petList}
+
+        <section>
+          <NewPetForm
+            addPetCallback={ this.addPet }
+            />
+        </section>
+
+        <section>
+          {petList}
+        </section>
       </div>
     )
   }

@@ -12,9 +12,10 @@ const PetCard = (props) => {
   return (
     <div>
 
+      <h2>{name}</h2>
+
       <ul>
         <li>{id}</li>
-        <li>{name}</li>
         <li>{species}</li>
         <li>{about}</li>
       </ul>

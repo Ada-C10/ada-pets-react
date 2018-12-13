@@ -39,8 +39,6 @@ class NewPetForm extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     const { name, species, image } = this.state;
-    
-    if (name === '' || species === '' || image === '') return;
 
     console.log(event);
     this.props.addPetCallback(this.state);
@@ -54,21 +52,7 @@ class NewPetForm extends Component {
           <label className="new-pet-form--label" htmlFor="Name">Name</label>
           <input name="name" placeholder="name" onChange={this.onFormChange} value={this.state.name} />
         </div>
-        <div>
-          <label className="new-pet-form--label" htmlFor="species">Species</label>
-          <input name="species" placeholder="species" onChange={this.onFormChange} value={this.state.species} />
-        </div>
-        <div>
-          <label className="new-pet-form--label" htmlFor="location">Location</label>
-          <input name="location" placeholder="location" onChange={this.onFormChange} value={this.state.location} />
-        </div>
-        <div>
-          <label className="new-pet-form--label" htmlFor="image">Image</label>
-          <input name="image" placeholder="image link" onChange={this.onFormChange} value={this.state.image} />
-        </div>
-        <div>
-          <label className="new-pet-form--label" htmlFor="about">About</label>
-        </div>
+        
         <div>
           <textarea className="new-pet-form--about" name="about" onChange={this.onFormChange} value={this.state.about}></textarea>
         </div>
